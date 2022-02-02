@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        script(src='/js/functions.js')
+        script(src='/js/main.js')
+        link(rel='stylesheet', href='/css/main.css')
+        <script src="https://kit.fontawesome.com/763cef8c9a.js" crossorigin="anonymous"></script>        
+        <title>NodeJS App</title>
+    </head>
+    <body>
+        <div id="statusMsg"></div>
+        <div class="center-login">
+            <div class="formCreate">
+                <div class="title">REGISTRACIJA: </div>
+                <div class="dataInputs">
+                    <form method="POST" action="" class="login-form">
+                        <div class="form-item">
+                            <span class="error-message"></span>
+                            <input type="text" name="username" placeholder="Username"/>
+                            <span class="slider"></span>
+                        </div>
+                        <div class="form-item">
+                            <span class="error-message"></span>
+                            <input type="email" name="email" placeholder="E-mail"/>
+                            <span class="slider"></span>
+                        </div>
+
+                        <div class="form-item">
+                            <span class="error-message"></span>
+                            <input type="password" name="password" placeholder="Password"/>
+                            <span class="slider"></span>
+                        </div>
+
+                        <div class="form-item">
+                            <span class="error-message"></span>
+                            <input type="password" name="password2" placeholder="Potvrdite password"/>
+                            <span class="slider"></span>
+                        </div>
+                        <button type="submit" class="blueButton formButton"><i class="fas fa-user-plus"></i> Registracija</button>
+                    </form>
+                </div>
+                <div class="lost-pw">Imate korisnicki racun? <a href="/user/login">Prijava</a></div>
+
+            </div>
+        </div>
+    </body>
+</html>

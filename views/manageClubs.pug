@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    script(src='/js/functions.js')
+    script(src='/js/main.js')
+    link(rel='stylesheet', href='/css/main.css')
+    <script src="https://kit.fontawesome.com/763cef8c9a.js" crossorigin="anonymous"></script>
+    <title>NodeJS App</title>
+</head>
+<body>
+
+<!-- nav -->
+<div class="box-30">
+    <div class="li-links">
+        <div class="title"><i class="fas fa-user"></i> KORISNIK: 
+            if userSession
+                <span>#{userSession.username}</span>
+                <span class="logout"><a href="/user/logout">Odjava <i class="fas fa-sign-out-alt"></i></a></span>
+        </div>
+        <ul>
+            <li><a href="/admin">Admin Panel <span class="right"><i class="fas fa-house-user"></i></span></a><span class="slider-nav"></span></li>
+            <li class="active"><a href="/admin/manageClubs">Uredi Klubove <span class="right"><i class="fas fa-tools"></i></span></a><span class="slider-nav"></span></li>
+            <li><a href="/admin/managePlayers">Uredi Igrace <span class="right"><i class="fas fa-tools"></i></span></a><span class="slider-nav"></span></li>
+            <li><a href="/admin/manageGames">Uredi Utakmice <span class="right"><i class="fas fa-tools"></i></span></a><span class="slider-nav"></span></li>
+        </ul>
+    </div>
+</div>
+
+<!-- content -->
+<div class="box-70">
+    if status
+        if status.error
+            <div class="errorClass renderStatus">#{status.statusMessage}</div>
+        else 
+            <div class="okClass renderStatus">#{status.statusMessage}</div>
+
+    <div id="statusMsg"></div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modalTitle">Confirmation required: </div>
+            <div class="msg modalMessage"></div>
+            <div class="modalButtonsWrap">
+                <div class="modalButtons">
+                    <button class="yesButton greenButton" listener="false" id="id_truebtn" role="button">Confirm</button>
+                    <button class="noButton redButton" listener="false" id="id_falsebtn" role="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="formCreate">
+        <div class="title">DODAJ KLUB: </div>
+        <div class="dataInputs">
+            <form action="" method="POST" enctype="multipart/form-data">
+                <div class="form-item">
+                    <input type="text" name="name" placeholder="Ime kluba" ><br>
+                    <span class="slider"></span>
+                </div>
+                <div class="form-item">
+                    <input type="text" name="location" placeholder="Lokacija kluba" ><br>
+                    <span class="slider"></span>
+                </div>
+                <label for="fileToUpload" class="custom-file-upload">
+                    <i class="fa fa-cloud-upload"></i> Izaberi sliku
+                </label><span class="picName">ime</span>
+                <input type="file" name="pictureFile" class="hiddenIn" id="fileToUpload" ><br>
+                <button type="submit" class="blueButton formButton"><i class="fas fa-user-plus"></i> Spremi</button>
+            </form>
+        </div>
+    </div>    
+    <div class="list-things">
+        <div class="title">LISTA KLUBOVA: </div>
+        <div class='dy-table'>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Slika</th>
+                    <th>Ime</th>
+                    <th>Lokacija</th>
+                    <th>Izaberi sliku</th>
+                    <th>Akcije</th>
+                </tr>
+                each club in clubs
+                    <tr>
+                        <td>#{club.id}<input type="hidden" name="id" value='#{club.id}' ></td>
+                        <td><img src='/images/#{club.fileName}' /></td>
+                        <td>
+                            <div class='form-item dy-fi'>
+                                <input type="text" name="name" class='dy-input' value='#{club.name}'>
+                                <span class='dy-slider'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class='form-item dy-fi'>
+                                <input type="text" name="location" class='dy-input' value='#{club.location}'>
+                                <span class='dy-slider'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <label for='fileToUpload-#{club.id}' class="custom-file-upload">
+                                <i class="fa fa-cloud-upload"></i> Izaberi sliku
+                            </label><span class="picName"> No file</span>
+                            <input type="file" class="file hiddenIn" name="pictureFile" id="fileToUpload-#{club.id}" >
+                        </td>
+                        <td>
+                            <button type="button" data-path="manageClubs" class="editButton center greenButton" id="edit-#{club.id}"><i class='fas fa-edit'></i></button>
+                            <button type="button" data-path="manageClubs" class="deleteButton center redButton" id="delete-#{club.id}"><i class='far fa-trash-alt'></i></button>
+                        </td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

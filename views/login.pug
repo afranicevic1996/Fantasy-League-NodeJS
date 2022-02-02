@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        script(src='/js/functions.js')
+        script(src='/js/main.js')
+        link(rel='stylesheet', href='/css/main.css')
+        <script src="https://kit.fontawesome.com/763cef8c9a.js" crossorigin="anonymous"></script>
+        <title>NodeJS App</title>
+    </head>
+    <body>
+        <div id="statusMsg"></div>
+        <div class="center-login">
+            <div class="formCreate">
+                <div class="title">LOGIN: </div>
+                <div class="dataInputs">
+                    <form method="POST" action="" class="login-form">
+                        <div class="form-item">
+                            <span class="error-message"></span>
+                            <input type="text" name="username" placeholder="Korisničko ime"/>
+                            <span class="slider"></span>
+                        </div>
+                        <div class="form-item">
+                            <span class="error-message"></span>
+                            <input type="password" name="password" placeholder="Lozinka"/>
+                            <span class="slider"></span>
+                        </div>
+                        <button type="submit" class="blueButton formButton"><i class="fas fa-user-plus"></i> Prijava</button>
+                    </form>
+                </div>
+                <div class="lost-pw">Zaboravili ste lozinku? <a href="/user/recoverPassword">Pomoć</a></div><br>
+                <div class="lost-pw">Nemate korisnicki racun? <a href="/user/register">Registracija</a></div>
+            </div>
+
+        </div>
+
+    </body>
+</html>

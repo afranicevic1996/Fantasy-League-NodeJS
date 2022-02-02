@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    script(src='/js/functions.js')
+    script(src='/js/main.js')
+    link(rel='stylesheet', href='/css/main.css')
+    <script src="https://kit.fontawesome.com/763cef8c9a.js" crossorigin="anonymous"></script>        
+    <title>NodeJS App</title>
+</head>
+<body>
+<!-- nav -->
+<div class="box-30">
+    <div class="li-links">
+        <div class="title"><i class="fas fa-user"></i> KORISNIK: 
+            if userSession
+                <span>#{userSession.username}</span>
+                <span class="logout"><a href="/user/logout">Odjava <i class="fas fa-sign-out-alt"></i></a></span>
+        </div>
+        <ul>
+            <li><a href="/admin">Admin Panel <span class="right"><i class="fas fa-house-user"></i></span></a><span class="slider-nav"></span></li>
+            <li><a href="/admin/manageClubs">Uredi Klubove <span class="right"><i class="fas fa-tools"></i></span></a><span class="slider-nav"></span></li>
+            <li><a href="/admin/managePlayers">Uredi Igrace <span class="right"><i class="fas fa-tools"></i></span></a><span class="slider-nav"></span></li>
+            <li class="active"><a href="/admin/manageGames">Uredi Utakmice <span class="right"><i class="fas fa-tools"></i></span></a><span class="slider-nav"></span></li>
+        </ul>
+    </div>
+</div>
+
+<!-- content -->
+<div class="box-70">
+
+    if status
+        if status.error
+            <div class="errorClass renderStatus">#{status.statusMessage}</div>
+        else 
+            <div class="okClass renderStatus">#{status.statusMessage}</div>
+
+    <div id="statusMsg"></div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modalTitle">Confirmation required: </div>
+            <div class="msg modalMessage"></div>
+            <div class="modalButtonsWrap">
+                <div class="modalButtons">
+                    <button class="yesButton greenButton" listener="false" id="id_truebtn" role="button">Confirm</button>
+                    <button class="noButton redButton" listener="false" id="id_falsebtn" role="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="add-game">
+        <div class="title">DODAJ UTAKMICU: </div>
+        <div class="game-wrapper">
+            <div class="teams">
+                <div class="team-name">-</div>
+                <div class="img-wrapper">
+                    <img src="/images/1633649715883.jpeg" />
+                </div>
+                <div class="club-select">
+                    <select name="homeclubID" class="txtInput" id="clubs">
+                        <option value="" selected>Izaberi domaćina</option>
+                        each club in clubs 
+                            <option value="#{club.id}" data-name="#{club.name}" data-fileName="#{club.fileName}">#{club.name}</option>
+                    </select>
+                    <span class='club-slider'></span>
+                </div>
+            </div>
+
+            <div class="game-info">
+                <span>vs.</span>
+                <div class="game-time">
+                    <input class="time" type="datetime-local" id="start" name="date">
+                    <button type="submit" id="add-game" class="blueButton formButton"><i class="fas fa-user-plus"></i> Spremi utakmicu</button>
+                </div>
+            </div>
+
+            <div class="teams">
+                <div class="team-name">-</div>
+                <div class="img-wrapper">
+                    <img src="/images/1633649715883.jpeg" />
+                </div>
+                <div class="club-select">
+                    <select name="awayclubID" class="txtInput" id="clubs">
+                        <option value="" selected>Izaberi gosta</option>
+                        each club in clubs 
+                            <option value="#{club.id}" data-name="#{club.name}" data-fileName="#{club.fileName}">#{club.name}</option>
+                    </select>
+                    <span class='club-slider'></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="list-things">
+        <div class="title">LISTA UTAKMICA: </div>
+        <div class='dy-table'>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th colspan="2">Domacin</th>
+                    <th style="width: 20%;">Datum i vrijeme</th>
+                    <th colspan="2">Gost</th>
+                    <th>Akcije</th>
+                </tr>
+                each game in games
+                    <tr>
+                        <td>#{game.id}<input type="hidden" name="id" value='#{game.id}' ></td>
+                        <td><img src="/images/#{game.homefileName}" /></td>
+                        <td>
+                            <select name="homeclubID" class="txtInput dy-input" id="clubs">
+                            each club in clubs 
+                                if (club.id === game.homeclubID)
+                                    <option value="#{club.id}" selected>#{club.name}</option>
+                                else 
+                                    <option value="#{club.id}">#{club.name}</option>
+
+                            </select>
+                        </td>
+                        <td>
+                            <input class="time dy-input" type="datetime-local" id="start" name="date" value="#{game.date}">
+                        </td>
+                        <td>
+                            <select name="awayclubID" class="txtInput dy-input" id="clubs">
+                            each club in clubs 
+                                if (club.id === game.awayclubID)
+                                    <option value="#{club.id}" selected>#{club.name}</option>
+                                else 
+                                    <option value="#{club.id}">#{club.name}</option>
+
+                            </select>  
+                        </td>
+                        <td><img src="/images/#{game.awayfileName}" /></td>
+                        <td>
+                            <a class="center grayButton" href="/admin/finishGame/#{game.id}"><i class="fas fa-info-circle"></i></a>
+                            <button type="button" data-path="manageGames" class="editButton center greenButton" id="edit-#{game.id}"><i class='fas fa-edit'></i></button>
+                            <button type="button" data-path="manageGames" class="deleteButton center redButton" id="delete-#{game.id}"><i class='far fa-trash-alt'></i></button>
+                        </td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

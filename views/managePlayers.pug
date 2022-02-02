@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    script(src='/js/functions.js')
+    script(src='/js/main.js')
+    link(rel='stylesheet', href='/css/main.css')
+    <script src="https://kit.fontawesome.com/763cef8c9a.js" crossorigin="anonymous"></script>
+    <title>NodeJS App</title>
+</head>
+<body>
+<!-- nav -->
+<div class="box-30">
+    <div class="li-links">
+        <div class="title"><i class="fas fa-user"></i> KORISNIK: 
+            if userSession
+                <span>#{userSession.username}</span>
+                <span class="logout"><a href="/user/logout">Odjava <i class="fas fa-sign-out-alt"></i></a></span>
+        </div>
+        <ul>
+            <li><a href="/admin">Admin Panel <span class="right"><i class="fas fa-house-user"></i></span></a><span class="slider-nav"></span></li>
+            <li><a href="/admin/manageClubs">Uredi Klubove <span class="right"><i class="fas fa-tools"></i></span></a><span class="slider-nav"></span></li>
+            <li class="active"><a href="/admin/managePlayers">Uredi Igrace <span class="right"><i class="fas fa-tools"></i></span></a><span class="slider-nav"></span></li>
+            <li><a href="/admin/manageGames">Uredi Utakmice <span class="right"><i class="fas fa-tools"></i></span></a><span class="slider-nav"></span></li>
+        </ul>
+    </div>
+</div>
+
+<!-- content -->
+<div class="box-70">
+    if status
+        if status.error
+            <div class="errorClass renderStatus">#{status.statusMessage}</div>
+        else 
+            <div class="okClass renderStatus">#{status.statusMessage}</div>
+
+    <div id="statusMsg"></div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modalTitle">Confirmation required: </div>
+            <div class="msg modalMessage"></div>
+            <div class="modalButtonsWrap">
+                <div class="modalButtons">
+                    <button class="yesButton greenButton" listener="false" id="id_truebtn" role="button">Confirm</button>
+                    <button class="noButton redButton" listener="false" id="id_falsebtn" role="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="formCreate">
+        <div class="title">DODAJ IGRACA: </div>
+        <div class="dataInputs">
+            <form action="" method="POST" enctype="multipart/form-data">
+                <div class="form-item">
+                    <input type="text" class="txtInput" name="name" placeholder="Ime" ><br>
+                    <span class="slider"></span>
+                </div>
+                <div class="form-item">
+                    <input type="text" class="txtInput" name="surname" placeholder="Prezime" ><br>
+                    <span class="slider"></span>
+                </div>
+                <div class="form-item">
+                    <select name="clubID" class="txtInput" id="clubs">
+                        <option value="" selected disabled hidden>Izaberi klub</option>
+                        each club in clubs
+                            <option value="#{club.id}">#{club.name}</option>
+                    </select>
+                    <span class="slider"></span>
+                </div>
+                <div class="form-item">
+                    <select name="positionID" class="txtInput" id="positions">
+                        <option value="" selected disabled hidden>Izaberi poziciju</option>
+                        each position in positions 
+                            <option value="#{position.id}">#{position.positionName}</option>
+                    </select>
+                    <span class="slider"></span>
+                </div>
+                <label for="fileToUpload" class="custom-file-upload">
+                    <i class="fa fa-cloud-upload"></i> Izaberi sliku
+                </label><span class="picName">ime</span>
+                <input type="file" name="pictureFile" class="formButton hiddenIn" id="fileToUpload"><br>
+                <button type="submit" class="blueButton formButton"><i class="fas fa-user-plus"></i> Spremi</button>
+            </form>
+        </div>
+    </div>
+    <br>
+
+    <div class="list-things">
+        <div class="title">LISTA IGRACA: </div>
+        <div class="data-select">
+            <select name="clubID" id="clubList">
+                <option value="0" selected disabled hidden>Izaberi klub</option>
+                each club in clubs
+                    <option value="#{club.id}">#{club.name}</option>
+            </select>
+            <div class="dataFields"></div>
+        </div>
+        <br>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    script(src='/js/functions.js')
+    script(src='/js/main.js')
+    link(rel='stylesheet', href='/css/main.css')
+    <script src="https://kit.fontawesome.com/763cef8c9a.js" crossorigin="anonymous"></script>        
+    <title>NodeJS App</title>
+</head>
+<body>
+<!-- info -->
+<div class="box-30">
+    <div class="user">
+        <div class="title">VAŠI PODACI: 
+            <span class="logout"><a href="/user/logout">Odjava <i class="fas fa-sign-out-alt"></i></a></span>
+        </div>
+        <div class="user-info">
+            if user
+                <span class="name">#{user.username}</span>
+            <img class="profilePicture" src='/images/defaultUser.jpeg' />
+            <div>
+                <label for="fileToUpload" class="custom-file-upload">
+                        <i class="fa fa-cloud-upload"></i> Izaberi sliku
+                </label>
+                <input type="file" accept="image/*" name="pictureFile" class="hiddenIn editPic" id="fileToUpload" >
+            </div>
+            <span class="break"></span>
+            <div class="user-data">
+                |Prijatelji
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- content -->
+<div class="box-70">
+    <div id="statusMsg"></div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modalTitle">Confirmation required: </div>
+            <div class="msg modalMessage"></div>
+            <div class="modalButtonsWrap">
+                <div class="modalButtons">
+                    <button class="yesButton greenButton" listener="false" id="id_truebtn" role="button">Confirm</button>
+                    <button class="noButton redButton" listener="false" id="id_falsebtn" role="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs-wrapper">
+        <!-- Tab links -->
+        <div class="tab">
+            <button class="tablinks active" data-tabcontent="moj-klub">Moj klub</button>
+            <button class="tablinks" data-tabcontent="dodaj-igraca">Dodaj igrača</button>
+            <button class="tablinks" data-tabcontent="rezultati">Rezultati</button>
+            <button class="tablinks" data-tabcontent="top-lista">Top lista</button>
+        </div>
+
+        <!-- moj klub -->
+        <div id="moj-klub" class="tabcontent" style="display: block;">
+            if fClub === false
+                <div class="no-club-data-wrap">
+                    <span>Čini se da nemate svoj klub, napravite ga:</span>
+                    <div class="dataInputs">
+                        <div class="form-item">
+                            <input type="text" name="name" placeholder="Ime kluba" ><br>
+                            <span class="slider"></span>
+                            <button type="submit" class="blueButton formButton" id="fClub"><i class="fas fa-user-plus"></i> Spremi</button>
+                        </div>
+                    </div>
+                </div>
+            else
+                <div id="club-name" class="data-wrap club-name" data-open="0" data-name="#{fClub.fantasyClubName}">#{fClub.fantasyClubName}</div>
+
+                <div class="data-wrap">
+                    <div class="title-red">Napadači (<span id="n-number" class="firstTeamCount">#{fClubPlayers.napadaci.length}/4</span>)</div>
+                    <div class="content-cards droppable" id="positionID-4" data-positionID="4">
+                        each napadac in fClubPlayers.napadaci
+                            <div class="card droppable" draggable="true" id="player-#{napadac.playerID}" data-positionID="#{napadac.positionID}">
+                                <div class="player-name">#{napadac.name} #{napadac.surname}</div>
+                                <div class="card-img red-image">
+                                    <img src='/images/#{napadac.fileName}' />
+                                </div>
+                                <span>#{napadac.clubName}</span>
+                                <div class="player-actions">
+                                    <button type="button" class="center player-delete-button"><i class='far fa-trash-alt'></i> Obriši</button>
+                                </div>
+                            </div> 
+                    </div>
+                </div>
+
+                <div class="data-wrap">
+                    <div class="title-green">Vezni red (<span id="v-number" class="firstTeamCount">#{fClubPlayers.vezni.length}/5</span>)</div>
+                    <div class="content-cards droppable" id="positionID-3" data-positionID="3">
+                        each veznjak in fClubPlayers.vezni
+                            <div class="card droppable" draggable="true" id="player-#{veznjak.playerID}" data-positionID="#{veznjak.positionID}">
+                                <div class="player-name">#{veznjak.name} #{veznjak.surname}</div>
+                                <div class="card-img green-image">
+                                    <img src='/images/#{veznjak.fileName}' />
+                                </div>
+                                <span>#{veznjak.clubName}</span>
+                                <div class="player-actions">
+                                    <button type="button" class="center player-delete-button"><i class='far fa-trash-alt'></i> Obriši</button>
+                                </div>
+                            </div> 
+                    </div>
+                </div>
+
+                <div class="data-wrap">
+                    <div class="title-blue">Braniči (<span id="b-number" class="firstTeamCount">#{fClubPlayers.branici.length}/5</span>)</div>
+                    <div class="content-cards droppable" id="positionID-2" data-positionID="2">
+                        each branic in fClubPlayers.branici
+                            <div class="card droppable" draggable="true" id="player-#{branic.playerID}" data-positionID="#{branic.positionID}">
+                                <div class="player-name">#{branic.name} #{branic.surname}</div>
+                                <div class="card-img blue-image">
+                                    <img src='/images/#{branic.fileName}' />
+                                </div>
+                                <span>#{branic.clubName}</span>
+                                <div class="player-actions">
+                                    <button type="button" class="center player-delete-button"><i class='far fa-trash-alt'></i> Obriši</button>
+                                </div>    
+                            </div> 
+                    </div>
+                </div>
+
+                <div class="data-wrap">
+                    <div class="title-yellow">Golman (<span id="g-number" class="firstTeamCount">#{fClubPlayers.golmani.length}/1</span>)</div>
+                    <div class="content-cards droppable" id="positionID-1" data-positionID="1">
+                        each golman in fClubPlayers.golmani
+                            <div class="card droppable" draggable="true" id="player-#{golman.playerID}" data-positionID="#{golman.positionID}">
+                                <div class="player-name">#{golman.name} #{golman.surname}</div>
+                                <div class="card-img yellow-image">
+                                    <img src='/images/#{golman.fileName}' />
+                                </div>
+                                <span>#{golman.clubName}</span>
+                                <div class="player-actions">
+                                    <button type="button" class="center player-delete-button"><i class='far fa-trash-alt'></i> Obriši</button>
+                                </div>
+                            </div> 
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="data-wrap">
+                    <div class="title-white">Klupa (<span id="k-number">#{fClubPlayers.klupa.length}/5</span>)</div>
+                    <div class="content-cards droppable" id="positionID-0" data-positionID="0">
+                        each igracKlupa in fClubPlayers.klupa
+                            if igracKlupa.positionID == 1
+                                - var borderColor = "yellow-image";
+                            if igracKlupa.positionID == 2
+                                - var borderColor = "blue-image";
+                            if igracKlupa.positionID == 3
+                                - var borderColor = "green-image";
+                            if igracKlupa.positionID == 4
+                                - var borderColor = "red-image";
+
+                            <div class="card droppable" draggable="true" id="player-#{igracKlupa.playerID}" data-positionID="#{igracKlupa.positionID}">
+                                <div class="player-name">#{igracKlupa.name} #{igracKlupa.surname}</div>
+                                <div class="card-img #{borderColor}">
+                                    <img src='/images/#{igracKlupa.fileName}' />
+                                </div>
+                                <span>#{igracKlupa.clubName}</span>
+                                <div class="player-actions">
+                                    <button type="button" class="center player-delete-button"><i class='far fa-trash-alt'></i> Obriši</button>
+                                </div>
+                            </div>   
+                    </div>
+                </div>
+        </div>
+
+        <!-- DODAJ IGRACA -->
+        <div id="dodaj-igraca" class="tabcontent">
+            <div class="dataInputs">
+                <div class="form-item search-player">
+                    <input type="text" class="txtInput player-input" name="name" placeholder="Počni upisivati naziv igrača"><br>
+                    <span class="slider"></span>
+                </div>
+
+                <div class="form-item search-player">
+                    <select name="clubID" class="txtInput player-input" id="clubs">
+                        <option value="default" selected disabled hidden>Izaberi klub</option>
+                        each club in clubs 
+                            <option value="#{club.id}">#{club.name}</option>
+                    </select>
+                    <span class="slider"></span>
+                </div>
+
+                <div class="form-item search-player">
+                    each position in positions
+                        <input type="checkbox" class="player-input" id="position-#{position.id}" name="checkbox#{position.id}" value="#{position.id}">
+                        <label for="position-#{position.id}">#{position.positionName}</label>
+                </div>
+            </div>
+
+            <div id="player-list">
+            </div>
+        </div>
+
+        <div id="rezultati" class="tabcontent">
+            |rezultati ovdje
+        </div>
+
+        <div id="top-lista" class="tabcontent">
+            |top lista ide ovdje
+        </div>
+    </div>    
+</div>
+</body>
+</html>
